@@ -1,0 +1,17 @@
+# Node.js এর জন্য প্রয়োজনীয় ফাইল উপেক্ষা করুন
+
+# Dependencies ফোল্ডার
+/node_modules
+
+# Environment variables ফাইল (যদি ব্যবহার করেন)
+.env
+
+# Log ফাইল
+*.log
+
+# npm ডিবাগ লগ
+npm-debug.log*
+
+# সিস্টেম ফাইল
+.DS_Store
+Thumbs.db

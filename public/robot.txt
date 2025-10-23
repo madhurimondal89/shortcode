@@ -1,0 +1,6 @@
+# সমস্ত বটকে সাইট অ্যাক্সেস করার অনুমতি দেওয়া হলো
+User-agent: *
+Allow: /
+
+# সাইটম্যাপের অবস্থান
+Sitemap: https://shortcode.shortcuturl.com/sitemap.xml

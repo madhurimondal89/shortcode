@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- আপনার ওয়েবসাইটের প্রধান পেজ -->
+  <url>
+    <loc>https://shortcode.shortcuturl.com/</loc>
+    <lastmod>2024-05-24</lastmod> <!-- এই তারিখটি আপনি যেদিন ফাইলটি তৈরি করছেন বা সাইটে পরিবর্তন আনছেন, সেদিনকার তারিখ দিন -->
+    <priority>1.0</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+</urlset>

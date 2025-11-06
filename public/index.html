@@ -29,6 +29,9 @@
     <meta name="twitter:image" content="https://shortcode.shortcuturl.com/logo.png">
     <meta name="twitter:url" content="https://shortcode.shortcuturl.com/">
 
+    <!-- Google AdSense Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8732458645979427" crossorigin="anonymous"></script>
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Google Fonts -->
@@ -66,7 +69,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 20px 0;
         }
 
         .container {
@@ -218,6 +221,28 @@
             text-decoration: underline;
             color: var(--dark-gray);
         }
+
+        /* === Accordion Styles === */
+        .accordion-body {
+            text-align: left; /* লেখা বাম দিক থেকে শুরু হবে */
+        }
+        .accordion-button:not(.collapsed) {
+            background-color: #e0ffe0;
+            color: var(--dark-green);
+            box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.125);
+        }
+        .accordion-button:focus {
+            box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25);
+        }
+        .seo-article h4 {
+            color: var(--dark-green);
+            margin-top: 1rem;
+            margin-bottom: 0.75rem;
+        }
+        .seo-article p, .seo-article li {
+            text-align: left;
+            line-height: 1.7;
+        }
     </style>
 </head>
 <body>
@@ -240,53 +265,202 @@
     </header>
     <!-- HEADER END -->
 
-    <main class="main-content">
-        <div class="container">
-            <div class="main-heading">
-                <h1>Shortcode URL</h1>
+    <div class="container-fluid mt-4">
+        <div class="row justify-content-center">
+            
+            <!-- Left Ad Column (Visible on Large Screens Only) -->
+            <div class="col-lg-2 d-none d-lg-block">
+                <!-- short url L -->
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-8732458645979427"
+                     data-ad-slot="9843232436"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
             </div>
-            <p class="lead mb-4">Turn long, messy links into clean, trackable short links.</p>
 
-            <form id="shortCodeForm">
-                <div class="mb-3 text-start">
-                    <label for="url" class="form-label">Original URL</label>
-                    <input type="url" class="form-control" id="url" name="url" placeholder="e.g., https://verylongexample.com/some/path/to/content?id=123" required>
-                </div>
-
-                <div class="mb-3 text-start">
-                    <label for="customCode" class="form-label">Custom Short Code (Optional)</label>
-                    <div class="input-group">
-                        <span class="input-group-text">shortcode.shortcuturl.com/</span>
-                        <input type="text" class="form-control" id="customCode" name="customCode" placeholder="my-awesome-link">
+            <!-- Main Content Column -->
+            <div class="col-lg-8">
+                <main class="main-content">
+                    <div class="container">
+                        <div class="main-heading">
+                            <h1>Shortcode URL</h1>
+                        </div>
+                        <p class="lead mb-4">Turn long, messy links into clean, trackable short links.</p>
+            
+                        <form id="shortCodeForm">
+                            <div class="mb-3 text-start">
+                                <label for="url" class="form-label">Original URL</label>
+                                <input type="url" class="form-control" id="url" name="url" placeholder="e.g., https://verylongexample.com/some/path/to/content?id=123" required>
+                            </div>
+            
+                            <div class="mb-3 text-start">
+                                <label for="customCode" class="form-label">Custom Short Code (Optional)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">shortcode.shortcuturl.com/</span>
+                                    <input type="text" class="form-control" id="customCode" name="customCode" placeholder="my-awesome-link">
+                                </div>
+                                <small class="form-text text-muted">Leave blank for a random short code.</small>
+                            </div>
+            
+                            <!-- Button Group - 50/50 Layout -->
+			<div class="d-flex gap-3 mt-4">
+    <button type="submit" class="btn btn-primary btn-lg w-100">Generate Short Link</button>
+    <button type="reset" class="btn btn-secondary btn-lg w-100">Reset</button>
+</div>
+                        </form>
+            
+                        <div id="result" class="mt-4" style="display:none;">
+                            <div id="result-content">
+                                <p><strong>Original URL:</strong> <a id="originalUrlDisplay" href="#" target="_blank"></a></p>
+                                <p><strong>Short Link:</strong> <a href="#" id="shortLinkDisplay" target="_blank"></a></p>
+                                <button class="btn btn-sm btn-outline-success" onclick="copyShortLink()">Copy Short Link</button>
+                            </div>
+                            
+                            <div class="code-section">
+                                <div class="code-item">
+                                    <h5>Barcode</h5>
+                                    <svg id="barcodeCanvas"></svg>
+                                    <button class="btn btn-sm btn-success download-btn" onclick="downloadBarcode()">Download Barcode</button>
+                                </div>
+                                <div class="code-item">
+                                    <h5>QR Code</h5>
+                                    <div id="qrcodeCanvas"></div>
+                                    <button class="btn btn-sm btn-success download-btn" onclick="downloadQrCode()">Download QR Code</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <small class="form-text text-muted">Leave blank for a random short code.</small>
-                </div>
-
-                <button type="submit" class="btn btn-primary btn-lg">Generate Short Link</button>
-            </form>
-
-            <div id="result" class="mt-4" style="display:none;">
-                <div id="result-content">
-                    <p><strong>Original URL:</strong> <a id="originalUrlDisplay" href="#" target="_blank"></a></p>
-                    <p><strong>Short Link:</strong> <a href="#" id="shortLinkDisplay" target="_blank"></a></p>
-                    <button class="btn btn-sm btn-outline-success" onclick="copyShortLink()">Copy Short Link</button>
-                </div>
-                
-                <div class="code-section">
-                    <div class="code-item">
-                        <h5>Barcode</h5>
-                        <svg id="barcodeCanvas"></svg>
-                        <button class="btn btn-sm btn-success download-btn" onclick="downloadBarcode()">Download Barcode</button>
+                </main>
+            
+                <!-- Accordion Section Start -->
+                <div class="container py-5" style="max-width: none; background: none; box-shadow: none; border: none; backdrop-filter: none;">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12">
+                            <div class="accordion" id="mainAccordion">
+            
+                                <!-- Accordion Item 1: How to short URL -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            How to Short URL
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#mainAccordion">
+                                        <div class="accordion-body">
+                                            <p>Using our tool to <strong>create a short link</strong> is incredibly simple. Just follow these three easy steps:</p>
+                                            <ol>
+                                                <li><strong>Paste Your Long URL:</strong> Copy the long web address you want to shorten and paste it into the "Original URL" field on our homepage.</li>
+                                                <li><strong>Customize (Optional):</strong> If you want a memorable link, you can use the "Custom Short Code" field to create a custom alias, like "my-special-event". This is a key feature of any good <strong>custom link shortener</strong>.</li>
+                                                <li><strong>Generate & Share:</strong> Click the "Generate Short Link" button. Your new, shorter URL, along with a QR code and barcode, will be ready instantly. Now you can copy it and share it anywhere!</li>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <!-- Accordion Item 2: Why Choose Us -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingTwo">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            Why Choose Our Online Shortcode URL?
+                                        </button>
+                                    </h2>
+                                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#mainAccordion">
+                                        <div class="accordion-body">
+                                            <p>In a world full of link management tools, our platform stands out for its simplicity and powerful features, offered completely free.</p>
+                                            <ul>
+                                                <li><strong>Completely Free:</strong> This is a <strong>url shortener free</strong> service. There are no hidden fees, subscriptions, or limits.</li>
+                                                <li><strong>Custom Links:</strong> Don't settle for random characters. Use our <strong>custom url shortener</strong> feature to brand your links and make them more trustworthy.</li>
+                                                <li><strong>Instant QR & Barcodes:</strong> Every link you create automatically comes with a downloadable QR code and barcode, perfect for print media, event tickets, and product packaging.</li>
+                                                <li><strong>Fast and Reliable:</strong> Our platform is built for speed. Your links are generated in a fraction of a second and our redirects are lightning-fast.</li>
+                                                <li><strong>No Registration Required:</strong> Get straight to business. You don't need to create an account to start shortening your links.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Accordion Item 3: FAQ -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingThree">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                            Frequently Asked Questions (FAQ)
+                                        </button>
+                                    </h2>
+                                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#mainAccordion">
+                                        <div class="accordion-body">
+                                            <p><strong>Is this service really free?</strong><br>Yes, it is a 100% <strong>link shortener free</strong> service. You can use all features without any cost.</p>
+                                            <p><strong>How long do the shortened links last?</strong><br>Our links are designed to be permanent. However, as the application relies on in-memory storage, links may be cleared if the server needs to restart for maintenance.</p>
+                                            <p><strong>Can I edit a short link after creating it?</strong><br>Once a short link is created, it cannot be edited. This ensures the stability and security of the redirect. If you need to change the destination, please <strong>create a short url</strong> again with the new destination.</p>
+                                             <p><strong>Is there a limit to how many links I can create?</strong><br>No, there are no limits. You can use our <strong>short link generator</strong> to create as many links as you need for your personal or business projects.</p>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <!-- Accordion Item 4: SEO Article -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingFour">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                            A Guide to Shortcode URL
+                                        </button>
+                                    </h2>
+                                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#mainAccordion">
+                                        <div class="accordion-body seo-article">
+                                            <h4>The Ultimate Guide to Mastering Short URLs in the Digital Age</h4>
+                                            <p>In today's fast-paced digital landscape, communication needs to be quick, clean, and efficient. This principle applies not just to our messages, but also to the links we share. Long, clunky URLs filled with tracking parameters and cryptic characters are a relic of the past. The modern solution is a clean, concise, and powerful <strong>short url</strong>. Whether you're a marketer, a social media manager, or just someone looking to share information cleanly, understanding how to effectively <strong>shorten hyperlink</strong> addresses is a critical skill. This guide will walk you through everything you need to know.</p>
+                                            
+                                            <h5>Why Do I Need to Shorten My URL?</h5>
+                                            <p>Have you ever tried to share a link in a social media post, only to find it takes up half your character limit? Or perhaps you've sent a link in an email that breaks into multiple lines, becoming unclickable. These are common frustrations that a quality <strong>link shortener</strong> solves. The primary reason to <strong>shorten website address</strong> links is to transform them from unmanageable strings into neat and tidy packages. A <strong>little url</strong> is easier to read, easier to copy and paste, and far more aesthetically pleasing. This simple change significantly improves the user experience for anyone who interacts with your link.</p>
+                                            
+                                            <h5>Beyond Aesthetics: The Power of Tiny Links</h5>
+                                            <p>While making a URL look good is a great start, the benefits of using a <strong>short link generator</strong> go much deeper. These <strong>tiny links</strong> pack a powerful punch in marketing and communication strategies.</p>
+                                            <ul>
+                                                <li><strong>Enhanced Shareability:</strong> A short link is perfect for platforms with character limits like Twitter. It's also easier to communicate verbally or include in printed materials like flyers and business cards.</li>
+                                                <li><strong>Increased Trust and Click-Through Rates:</strong> A random, long URL can look suspicious or like spam. A clean, and especially a custom, short URL appears more professional and trustworthy, encouraging more clicks. When you need to create a <strong>shortcut link url</strong> for a campaign, this trust is invaluable.</li>
+                                                <li><strong>Branding Opportunities:</strong> The best <strong>site to shorten url</strong> addresses will offer customization. Using a <strong>custom url shortener</strong> allows you to replace the random characters with a relevant keyword (e.g., your brand name or a campaign slogan). This reinforces your brand identity every time the link is shared.</li>
+                                            </ul>
+                                            
+                                            <h5>Choosing the Right Web URL Shortener for Your Needs</h5>
+                                            <p>With so many options available, how do you find the right <strong>web url shortener</strong>? For most users, a service that is a <strong>url shortener free</strong> of charge is the first priority. Our platform offers just that—a robust, no-cost solution for everyone. When evaluating a service, consider its reliability, speed, and ease of use. You shouldn't have to navigate complex menus just to <strong>shorten web address</strong> links. The process should be intuitive: paste, click, and copy. Our tool is designed with this simplicity at its core, making the journey from a long <strong>url to short url</strong> seamless.</p>
+                                            
+                                            <h5>Practical Applications: Where to Use Your Shorturls</h5>
+                                            <p>The use cases for <strong>shorturls</strong> are virtually limitless. They are essential tools for digital marketers, but their utility extends to many other areas.</p>
+                                            <ul>
+                                                <li><strong>Social Media Marketing:</strong> Platforms like LinkedIn are crucial for professional networking. A <strong>short linkedin url</strong> to your portfolio or a new article looks far more professional in a post or profile than a long, messy one.</li>
+                                                <li><strong>Email Campaigns:</strong> Ensure your links don't break in different email clients. A short URL guarantees deliverability and a clean look in your newsletters.</li>
+                                                <li><strong>Offline Marketing:</strong> By converting your short link into a QR code (a feature our <strong>short url generator</strong> provides automatically), you can bridge the gap between your physical and digital marketing efforts. Users can scan a poster or business card and be taken directly to your landing page.</li>
+                                                <li><strong>SMS and Messaging:</strong> When sending links via text, space is at a premium. A compact link is essential for clear and effective communication. The ability to <strong>shortify url</strong> addresses is perfect for this.</li>
+                                            </ul>
+                                            
+                                            <p>In conclusion, mastering the art of the short link is no longer a niche skill but a fundamental aspect of effective digital communication. Whether your goal is to simply <strong>create short url</strong> links for easier sharing or to implement a full-scale branding strategy with a <strong>custom link shortener</strong>, the right tool makes all the difference. Start today by transforming your long links into powerful, shareable assets, and watch your engagement grow.</p>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                            </div>
+                        </div>
                     </div>
-                    <div class="code-item">
-                        <h5>QR Code</h5>
-                        <div id="qrcodeCanvas"></div>
-                        <button class="btn btn-sm btn-success download-btn" onclick="downloadQrCode()">Download QR Code</button>
-                    </div>
                 </div>
+                <!-- Accordion Section End -->
+            </div>
+
+            <!-- Right Ad Column (Visible on Large Screens Only) -->
+            <div class="col-lg-2 d-none d-lg-block">
+                <!-- short url R -->
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-8732458645979427"
+                     data-ad-slot="8530150763"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
             </div>
         </div>
-    </main>
+    </div>
 
     <!-- FOOTER START -->
     <footer class="mt-auto py-4 bg-light text-center">
@@ -311,11 +485,13 @@
         let currentShortURL = '';
         let currentShortCode = '';
 
-        document.getElementById('shortCodeForm').addEventListener('submit', async (event) => {
+        const shortCodeForm = document.getElementById('shortCodeForm');
+        const resultDiv = document.getElementById('result');
+
+        shortCodeForm.addEventListener('submit', async (event) => {
             event.preventDefault();
             const url = document.getElementById('url').value;
             const customCode = document.getElementById('customCode').value;
-            const resultDiv = document.getElementById('result');
             const resultContent = document.getElementById('result-content');
             
             resultDiv.style.display = 'none';
@@ -365,6 +541,11 @@
             resultDiv.style.display = 'block';
         });
 
+        // Reset বাটন চাপলে রেজাল্ট বক্স হাইড করার জন্য
+        shortCodeForm.addEventListener('reset', () => {
+            resultDiv.style.display = 'none';
+        });
+
         function copyShortLink() {
             if (currentShortURL) {
                 navigator.clipboard.writeText(currentShortURL).then(() => alert('Short link copied to clipboard!'));
@@ -396,5 +577,8 @@
             }
         }
     </script>
+    
+    <!-- Bootstrap JS Bundle (Accordion এর জন্য এটি আবশ্যক) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

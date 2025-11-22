@@ -29,11 +29,22 @@
     <meta name="twitter:image" content="https://shortcode.shortcuturl.com/logo.png">
     <meta name="twitter:url" content="https://shortcode.shortcuturl.com/">
 
-    <!-- Schema.org JSON-LD Structured Data (Fixed) -->
+    <!-- Schema.org JSON-LD Structured Data (With Breadcrumb) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://shortcode.shortcuturl.com/"
+            }
+          ]
+        },
         {
           "@type": "WebApplication",
           "name": "Shortcode URL Generator",

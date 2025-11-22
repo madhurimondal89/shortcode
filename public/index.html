@@ -29,6 +29,83 @@
     <meta name="twitter:image" content="https://shortcode.shortcuturl.com/logo.png">
     <meta name="twitter:url" content="https://shortcode.shortcuturl.com/">
 
+    <!-- Schema.org JSON-LD Structured Data (Added) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "name": "Shortcode URL Generator",
+          "url": "https://shortcode.shortcuturl.com/",
+          "applicationCategory": "UtilityApplication",
+          "operatingSystem": "All",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "featureList": "URL Shortening, Custom Short Codes, QR Code Generation, Barcode Generation",
+          "description": "A free online tool to shorten URLs, create custom links, and generate QR codes and barcodes instantly."
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How to Short URL?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "1. Paste your long URL into the input field. 2. Optionally enter a custom short code. 3. Click the 'Generate Short Link' button to get your shortened URL, QR code, and barcode."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is this service really free?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, this is a 100% free service. There are no hidden charges, subscriptions, or limits on the number of links you can create."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I create a custom name for my short link?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Absolutely! You can use the 'Custom Short Code' field to create a custom alias for your link (e.g., your-brand-name) to make it more memorable."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How long do the shortened links last?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Currently, links are designed to work as long as the service is active. However, since this is an in-memory application, links may be reset if the server restarts."
+              }
+            }
+          ]
+        },
+        {
+          "@type": "Article",
+          "headline": "The Ultimate Guide to Mastering Short URLs in the Digital Age",
+          "description": "A comprehensive guide on why you need to shorten URLs, the benefits of tiny links, and practical applications for digital marketing.",
+          "author": {
+            "@type": "Organization",
+            "name": "ShortcutURL"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "ShortcutURL",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://shortcode.shortcuturl.com/logo.png"
+            }
+          }
+        }
+      ]
+    }
+    </script>
+
     <!-- Google AdSense Script -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8732458645979427" crossorigin="anonymous"></script>
 
@@ -128,9 +205,6 @@
             border: none;
             font-weight: 600;
             transition: all 0.3s ease;
-            width: 100%;
-            margin-top: 20px;
-            color: var(--white);
         }
         .btn-primary:hover {
             background: linear-gradient(to right, var(--dark-green), var(--primary-green));
@@ -222,9 +296,8 @@
             color: var(--dark-gray);
         }
 
-        /* === Accordion Styles === */
         .accordion-body {
-            text-align: left; /* লেখা বাম দিক থেকে শুরু হবে */
+            text-align: left;
         }
         .accordion-button:not(.collapsed) {
             background-color: #e0ffe0;
@@ -306,11 +379,11 @@
                                 <small class="form-text text-muted">Leave blank for a random short code.</small>
                             </div>
             
-                            <!-- Button Group - 50/50 Layout -->
-			<div class="d-flex gap-3 mt-4">
-    <button type="submit" class="btn btn-primary btn-lg w-100">Generate Short Link</button>
-    <button type="reset" class="btn btn-secondary btn-lg w-100">Reset</button>
-</div>
+                            <!-- Button Group - 50/50 Flexbox Layout -->
+                            <div class="d-flex gap-3 mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg w-100">Generate Short Link</button>
+                                <button type="reset" class="btn btn-secondary btn-lg w-100">Reset</button>
+                            </div>
                         </form>
             
                         <div id="result" class="mt-4" style="display:none;">
@@ -541,7 +614,6 @@
             resultDiv.style.display = 'block';
         });
 
-        // Reset বাটন চাপলে রেজাল্ট বক্স হাইড করার জন্য
         shortCodeForm.addEventListener('reset', () => {
             resultDiv.style.display = 'none';
         });
